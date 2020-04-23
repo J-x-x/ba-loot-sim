@@ -40,7 +40,7 @@ public class LootUtils {
         }
 
         if (random.nextDouble() <= 0.001) {
-            lootTracker.put("Pet Pennance Queen", lootTracker.get("Pet Pennance Queen") + 1);
+            lootTracker.put("Pet Penance Queen", lootTracker.get("Pet Penance Queen") + 1);
         } else if (random.nextDouble() <= 0.066) {
             lootTracker.put("Elite Clue Scroll", lootTracker.get("Elite Clue Scroll") + 1);
         }
