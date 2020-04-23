@@ -11,7 +11,7 @@ public class LootUtils {
 
     public LootUtils() {
         random = new Random();
-        lootTracker.put("Pet Pennance Queen", 0);
+        lootTracker.put("Pet Penance Queen", 0);
         lootTracker.put("Elite Clue Scroll", 0);
     }
 
