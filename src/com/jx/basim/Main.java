@@ -38,11 +38,12 @@ public class Main {
         lootUtils.AddReward(new Reward("Blood Rune", lootUtils.CalculateWeight(499.9375,16000), 250, 300));
         lootUtils.AddReward(new Reward("Limpwurt Root", lootUtils.CalculateWeight(499.9375,16000), 30, 50));
         lootUtils.AddReward(new Reward("Unicorn Horn", lootUtils.CalculateWeight(499.9375,16000), 30, 50));
-        lootUtils.AddReward(new Reward("Coins", lootUtils.CalculateWeight(499.9375,16000), 50000, 70000));
+        lootUtils.AddTertiaryReward(new Reward("Elite Clue Scroll", lootUtils.CalculateWeight(1,15), 1, 1));
+        lootUtils.AddTertiaryReward(new Reward("Pet Penance Queen", lootUtils.CalculateWeight(1,1000), 1, 1));
 
         lootUtils.SortLootTable();
 
-        for (int i = 1; i <= 1000; i++) {
+        for (int i = 1; i <= 15 ; i++) {
             lootUtils.RollReward();
         }
 

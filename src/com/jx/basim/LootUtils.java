@@ -6,6 +6,7 @@ public class LootUtils {
 
     Random random;
     ArrayList<Reward> lootTable = new ArrayList<>();
+    ArrayList<Reward> tertiartyLootTable = new ArrayList<>();
 
     TreeMap<String,Integer> lootTracker = new TreeMap<>();
 
@@ -24,13 +25,16 @@ public class LootUtils {
         lootTracker.put(reward.getName(),0);
     }
 
+    public void AddTertiaryReward(Reward reward) {
+        tertiartyLootTable.add(reward);
+        lootTracker.put(reward.getName(),0);
+    }
+
     public void RollReward() {
         double roll = random.nextDouble();
         double count = 0;
-        Reward reward;
 
-        for (Reward value : lootTable) {
-            reward = value;
+        for (Reward reward : lootTable) {
             if (count + reward.getWeight() >= roll) {
                 lootTracker.put(reward.getName(), lootTracker.get(reward.getName()) + rollQuantity(reward));
                 break;
@@ -39,10 +43,14 @@ public class LootUtils {
             }
         }
 
-        if (random.nextDouble() <= 0.001) {
-            lootTracker.put("Pet Penance Queen", lootTracker.get("Pet Penance Queen") + 1);
-        } else if (random.nextDouble() <= 0.066) {
-            lootTracker.put("Elite Clue Scroll", lootTracker.get("Elite Clue Scroll") + 1);
+        count = 0;
+        for (Reward reward : tertiartyLootTable) {
+            if (count + reward.getWeight() >= roll) {
+                lootTracker.put(reward.getName(), lootTracker.get(reward.getName()) + rollQuantity(reward));
+                break;
+            } else {
+                count = count + reward.getWeight();
+            }
         }
     }
 
