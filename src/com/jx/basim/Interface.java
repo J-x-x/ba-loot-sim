@@ -11,10 +11,11 @@ public class Interface {
         this.lootUtils = lootUtils;
         this.grandExchangeUtils = grandExchangeUtils;
         CreateLootTable();
+        lootUtils.SortLootTable();
     }
 
     public String PerformRolls(Integer rolls) {
-        Integer lootValue = 0;
+        int lootValue = 0;
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 1; i <= rolls; i++) {
             lootUtils.RollReward();
@@ -22,17 +23,19 @@ public class Interface {
 
         TreeMap<Reward, Integer> lootTracker = lootUtils.GetRollTrackerResults();
 
-        stringBuilder = stringBuilder.append("You rolled: ");
+        stringBuilder.append("You rolled: ");
 
         for (Reward reward : lootTracker.keySet()) {
             if (lootTracker.get(reward) > 0) {
                 lootValue = lootValue + reward.getGrandExchangeValue() * lootTracker.get(reward);
                 stringBuilder.append("\n")
                         .append(reward.getName())
-                        .append(": ").append(lootTracker.get(reward))
-                        .append(" worth ")
-                        .append(grandExchangeUtils.ShortenValue(reward.getGrandExchangeValue() * lootTracker.get(reward)))
-                        .append("!");
+                        .append(": ").append(lootTracker.get(reward));
+                        if (reward.getGrandExchangeValue() > 0) {
+                            stringBuilder.append(" worth ")
+                                    .append(grandExchangeUtils.ShortenValue(reward.getGrandExchangeValue() * lootTracker.get(reward)))
+                                    .append("!");
+                        }
             }
         }
 

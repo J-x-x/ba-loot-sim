@@ -1,13 +1,10 @@
 package com.jx.basim;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
-import java.nio.Buffer;
-import java.nio.file.Files;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 
@@ -30,10 +27,10 @@ public class GrandExchangeUtils {
             URLConnection connection = grandExchangeAPIURL.openConnection();
             connection.setConnectTimeout(30000);
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            String grandExchangeJSON = "";
+            StringBuilder grandExchangeJSON = new StringBuilder();
             String line;
             while ((line = bufferedReader.readLine()) != null) {
-                grandExchangeJSON = grandExchangeJSON + line;
+                grandExchangeJSON.append(line);
             }
             System.out.println(itemID + " returned " + grandExchangeJSON);
             bufferedReader.close();

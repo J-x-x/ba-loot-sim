@@ -9,7 +9,7 @@ public class BaSimulator {
 
         Interface i = new Interface(lootUtils, grandExchangeUtils);
 
-        String rollOutput = i.PerformRolls(100);
+        String rollOutput = i.PerformRolls(3);
         System.out.println(rollOutput);
     }
 }
