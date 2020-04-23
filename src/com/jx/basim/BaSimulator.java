@@ -1,6 +1,6 @@
 package com.jx.basim;
 
-public class Main {
+public class BaSimulator {
 
     private static LootUtils lootUtils = new LootUtils();
     private static GrandExchangeUtils grandExchangeUtils = new GrandExchangeUtils();

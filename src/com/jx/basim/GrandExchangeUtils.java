@@ -1,17 +1,24 @@
 package com.jx.basim;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.Buffer;
+import java.nio.file.Files;
 import java.text.DecimalFormat;
+import java.util.HashMap;
 
 public class GrandExchangeUtils {
 
-    public GrandExchangeUtils() {}
+    private File storageFile = new File("./grandExchangePrices.json");
+    private HashMap<String,Integer> grandExchangePriceHashMap;
+
+    public GrandExchangeUtils() {
+        fetchPricesFromFile();
+    }
 
     public Integer FetchValue(Integer itemID) {
         return parseValue(fetchJSON(itemID),itemID);
@@ -38,6 +45,23 @@ public class GrandExchangeUtils {
         }
     }
 
+    private void fetchPricesFromFile() {
+        if (!storageFile.exists()) {
+            System.out.println("Error: Price file does not exist. Run the price updater first.");
+        } else {
+            try {
+                BufferedReader bufferedReader = new BufferedReader(new FileReader(storageFile));
+                JSONObject jsonObject = new JSONObject(bufferedReader.readLine());
+                grandExchangePriceHashMap = (HashMap) jsonObject.toMap();
+            } catch (Exception ex) {
+                System.out.println("Error: Unable to read from price file. Grand Exchange values will not be available.");
+            }
+        }
+    }
+
+    public Integer GetValue(Integer itemID) {
+        return grandExchangePriceHashMap.get(itemID.toString());
+    }
     private Integer parseValue(String jsonString, Integer itemID) {
         try {
             JSONObject jsonObject = new JSONObject(jsonString).getJSONObject("item").getJSONObject("current");
