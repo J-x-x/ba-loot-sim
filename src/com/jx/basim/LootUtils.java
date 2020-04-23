@@ -7,10 +7,12 @@ public class LootUtils {
     Random random;
     ArrayList<Reward> lootTable = new ArrayList<>();
 
-    HashMap<String, Integer> rollTracker = new HashMap<>();
+    TreeMap<String,Integer> lootTracker = new TreeMap<>();
 
     public LootUtils() {
         random = new Random();
+        lootTracker.put("Pet Pennance Queen", 0);
+        lootTracker.put("Elite Clue Scroll", 0);
     }
 
     public double CalculateWeight(double chance, double in) {
@@ -19,25 +21,29 @@ public class LootUtils {
 
     public void AddReward(Reward reward) {
         lootTable.add(reward);
-        rollTracker.put(reward.getName(),0);
+        lootTracker.put(reward.getName(),0);
     }
 
-    public Reward RollReward() {
+    public void RollReward() {
         double roll = random.nextDouble();
         double count = 0;
         Reward reward;
 
-        for (int i = 0; i< lootTable.size(); i++) {
-            reward = lootTable.get(i);
+        for (Reward value : lootTable) {
+            reward = value;
             if (count + reward.getWeight() >= roll) {
-                rollTracker.put(reward.getName(), rollTracker.get(reward.getName()) + rollQuantity(reward));
-                return reward;
+                lootTracker.put(reward.getName(), lootTracker.get(reward.getName()) + rollQuantity(reward));
+                break;
             } else {
                 count = count + reward.getWeight();
             }
         }
 
-        return null;
+        if (random.nextDouble() <= 0.001) {
+            lootTracker.put("Pet Pennance Queen", lootTracker.get("Pet Pennance Queen") + 1);
+        } else if (random.nextDouble() <= 0.066) {
+            lootTracker.put("Elite Clue Scroll", lootTracker.get("Elite Clue Scroll") + 1);
+        }
     }
 
     private Integer rollQuantity(Reward reward) {
@@ -46,18 +52,19 @@ public class LootUtils {
     }
 
     public String GetRollTrackerResults() {
-        String results = "";
-        for (String key : rollTracker.keySet()) {
-            results = results + key + ": " + rollTracker.get(key) + "\n";
+        StringBuilder results = new StringBuilder();
+        for (String key : lootTracker.keySet()) {
+            results.append(key).append(": ").append(lootTracker.get(key)).append("\n");
         }
-        return results;
+        return results.toString();
     }
 
     public void SortLootTable() {
-        Collections.sort(lootTable, new Comparator<Reward>() {
+        lootTable.sort(new Comparator<>() {
+            @SuppressWarnings("ComparatorMethodParameterNotUsed")
             @Override
             public int compare(Reward reward, Reward t1) {
-                return (reward.getWeight() >= t1.getWeight()) ? 1 : -1;
+                return reward.getWeight() >= t1.getWeight() ? 1 : -1;
             }
         });
     }

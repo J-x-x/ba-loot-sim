@@ -5,8 +5,8 @@ public class Main {
     public static void main(String[] args) {
         LootUtils lootUtils = new LootUtils();
 
-        lootUtils.AddReward(new Reward("D Chain", lootUtils.CalculateWeight(1,16000), 1, 1));
-        lootUtils.AddReward(new Reward("D Med", lootUtils.CalculateWeight(1,16000), 1, 1));
+        lootUtils.AddReward(new Reward("Dragon Chainbody", lootUtils.CalculateWeight(1,16000), 1, 1));
+        lootUtils.AddReward(new Reward("Dragon Med Helm", lootUtils.CalculateWeight(1,16000), 1, 1));
         lootUtils.AddReward(new Reward("Ranarr Weed", lootUtils.CalculateWeight(499.9375,16000), 20, 30));
         lootUtils.AddReward(new Reward("Snapdragon", lootUtils.CalculateWeight(499.9375,16000), 20, 30));
         lootUtils.AddReward(new Reward("Torstol", lootUtils.CalculateWeight(499.9375,16000), 20, 30));
@@ -42,7 +42,7 @@ public class Main {
 
         lootUtils.SortLootTable();
 
-        for (int i = 1; i <= 1; i++) {
+        for (int i = 1; i <= 1000; i++) {
             lootUtils.RollReward();
         }
 
