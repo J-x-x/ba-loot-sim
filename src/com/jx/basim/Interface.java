@@ -4,14 +4,19 @@ import java.util.TreeMap;
 
 public class Interface {
 
+    private final int MAXIMUM_VERBOSE_GAMBLES = 10;
+
     private LootUtils lootUtils;
     private GrandExchangeUtils grandExchangeUtils;
+    private int mode;
 
-    public Interface(LootUtils lootUtils, GrandExchangeUtils grandExchangeUtils) {
+
+    public Interface(LootUtils lootUtils, GrandExchangeUtils grandExchangeUtils, int mode) {
         this.lootUtils = lootUtils;
         this.grandExchangeUtils = grandExchangeUtils;
         CreateLootTable();
         lootUtils.SortLootTable();
+        this.mode = mode;
     }
 
     public String PerformRolls(Integer rolls) {
@@ -28,14 +33,16 @@ public class Interface {
         for (Reward reward : lootTracker.keySet()) {
             if (lootTracker.get(reward) > 0) {
                 lootValue = lootValue + reward.getGrandExchangeValue() * lootTracker.get(reward);
-                stringBuilder.append("\n")
-                        .append(reward.getName())
-                        .append(": ").append(lootTracker.get(reward));
-                        if (reward.getGrandExchangeValue() > 0) {
-                            stringBuilder.append(" worth ")
-                                    .append(grandExchangeUtils.ShortenValue(reward.getGrandExchangeValue() * lootTracker.get(reward)))
-                                    .append("!");
-                        }
+                if ((mode == 1 && (reward.getItemID() == 12073 || reward.getItemID() == 12703)) || mode == 0 || rolls < MAXIMUM_VERBOSE_GAMBLES) {
+                    stringBuilder.append("\n")
+                            .append(reward.getName())
+                            .append(": ").append(lootTracker.get(reward));
+                    if (reward.getGrandExchangeValue() > 0) {
+                        stringBuilder.append(" worth ")
+                                .append(grandExchangeUtils.ShortenValue(reward.getGrandExchangeValue() * lootTracker.get(reward)))
+                                .append("!");
+                    }
+                }
             }
         }
 
