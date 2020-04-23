@@ -11,6 +11,9 @@ public class Interface {
     private int mode;
 
 
+    /**
+     * @param mode 0 or 1, 0 writes all gambles to the command line, 1 only writes if "rolls" is < 10. Pets and clues are always shown along with a total gamble value.
+     */
     public Interface(LootUtils lootUtils, GrandExchangeUtils grandExchangeUtils, int mode) {
         this.lootUtils = lootUtils;
         this.grandExchangeUtils = grandExchangeUtils;
