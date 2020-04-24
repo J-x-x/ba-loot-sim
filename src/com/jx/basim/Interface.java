@@ -31,7 +31,7 @@ public class Interface {
 
         TreeMap<Reward, Integer> lootTracker = lootUtils.GetRollTrackerResults();
 
-        stringBuilder.append("You rolled: ");
+        stringBuilder.append("You performed ").append(rolls).append(" gambles:");
 
         for (Reward reward : lootTracker.keySet()) {
             if (lootTracker.get(reward) > 0) {
